@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean class="org.example.dependency_injection0.Student" name="student1">
+        <property name="id">
+            <value>4</value>
+        </property>
+        <property name="name">
+            <value>Ajit Raj Dwivedi</value>
+        </property>
+        <property name="address">
+            <value>M.E. 360 Hemant Vihar, Barra-2, Kanpur</value>
+        </property>
+    </bean>
+
+    <bean class="org.example.dependency_injection0.Student" name="student2">
+        <property name="id" value="4"/>
+        <property name="name" value="Ajit Raj Dwivedi"/>
+        <property name="address" value="M.E. 360 Hemant Vihar, Barra-2, Kanpur"/>
+    </bean>
+
+    <!-- via p-schema-->
+    <bean class="org.example.dependency_injection0.Student" name="student3" p:id="4" p:name="Ajit Raj Dwivedi"
+          p:address="M.E. 360 Hemant Vihar, Barra-2, Kanpur"/>
+
+    <bean class="org.example.dependency_injection0.Employee" name="employee1">
+        <property name="name" value="Ajit Raj Dwivedi"/>
+        <property name="phones">
+            <list>
+                <value>7905175794</value>
+                <value>9616957845</value>
+            </list>
+        </property>
+        <property name="addresses">
+            <set>
+                <value>M.E. 360 Hemant Vihar, Barra-2, Kanpur</value>
+                <value>Flat no- 303 Srinidhi Nilayam, Nallurhalli</value>
+            </set>
+        </property>
+        <property name="courses">
+            <map>
+                <entry key="JAVA" value="2 months"/>
+                <entry key="Python" value="4 months"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="org.example.dependency_injection0.B" name="bRef">
+        <property name="y" value="44"/>
+    </bean>
+
+    <bean class="org.example.dependency_injection0.A" name="aRef">
+        <property name="x" value="4444"/>
+        <property name="b">
+            <ref bean="bRef"/>
+        </property>
+    </bean>
+
+
+    <!-- Constructor Injection-->
+    <bean class="org.example.dependency_injection0.Certificate" name="certificate">
+        <constructor-arg>
+            <value>
+                Android Using Kotlin
+            </value>
+        </constructor-arg>
+    </bean>
+    <bean class="org.example.dependency_injection0.Person" name="person">
+        <constructor-arg>
+            <value>44</value>
+        </constructor-arg>
+        <constructor-arg>
+            <value>Ajit Raj Dwivedi</value>
+        </constructor-arg>
+        <constructor-arg ref="certificate"/>
+    </bean>
+
+    <!-- Constructor Injection using c-schema -->
+    <bean class="org.example.dependency_injection0.Certificate" name="certificate1" c:name="Java Programming Language"/>
+    <bean class="org.example.dependency_injection0.Person" name="person1">
+        <constructor-arg>
+            <value>44</value>
+        </constructor-arg>
+        <constructor-arg>
+            <value>Ajit Raj Dwivedi</value>
+        </constructor-arg>
+        <constructor-arg ref="certificate1"/>
+    </bean>
+
+    <bean class="org.example.dependency_injection0.Addition" name="addition">
+        <constructor-arg value="12"/>
+        <constructor-arg value="34"/> <!-- By default spring treats constructor args as string.
+        Then it moves from top to bottom in Addition class and finds int constructor and uses it. Had double been the first constructor it would have been used. But if there is a construcotr with String parmas as well then top to bottom priority is not there irrespective of the position of String constructor.-->
+    </bean>
+
+    <bean class="org.example.dependency_injection0.Addition" name="addition1">
+        <constructor-arg value="12.44" type="double"
+                         index="1"/> <!--Index is used to change order of params in the constructor -->
+        <constructor-arg value="34.4444" type="double" index="0"/>
+    </bean>
+</beans>
